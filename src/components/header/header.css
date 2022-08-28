@@ -59,7 +59,7 @@ header {
   font-size: 0.9rem;
 }
 
-/*  ***************MEDIA QUERY FOR MEDUM DEVICE */
+/*  ***************MEDIA QUERY FOR MEDIUM DEVICE */
 @media screen and (max-width: 1024px) {
   header {
     height: 68vh;

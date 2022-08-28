@@ -71,7 +71,7 @@ export const Experience = () => {
           </div>
         </div>
 
-        <div className="experience__baackend">
+        <div className="experience__backend">
           <h3>Backend Development</h3>
 
           <div className="experience__content">
