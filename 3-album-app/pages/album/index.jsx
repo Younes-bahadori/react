@@ -49,11 +49,9 @@ export default function BasicTable() {
                     <Button variant="outlined" color="error">
                       Delete
                     </Button>
-                    <link href="album?album.id">
-                      <Button variant="contained" color="info">
+                      <Button href="/picture" variant="contained" color="info">
                         SHow Details
                       </Button>
-                    </link>
                   </Stack>
                 </TableCell>
               </TableRow>

@@ -3,13 +3,17 @@ import styles from "../styles/Home.module.css";
 
 import Link from "next/link";
 import { useRouter } from "next/router";
+import {
+  useTranslation,
+  useLanguageQuery,
+  LanguageSwitcher,
+} from "next-export-i18n";
 
-import { useTranslation, Trans } from "next-i18next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 
 export default function Home() {
   const router = useRouter();
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   return (
     <div className={styles.container}>
@@ -39,9 +43,3 @@ export default function Home() {
     </div>
   );
 }
-
-export const getServerSideProps = async ({ locale }) => ({
-  props: {
-    ...(await serverSideTranslations(locale, ["common"])),
-  },
-});
