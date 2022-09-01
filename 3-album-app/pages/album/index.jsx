@@ -1,31 +1,80 @@
-import * as React from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
+import {
+  Grid,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  TextField,
+} from "@mui/material";
+
 import { Stack } from "@mui/system";
 import Link from "next/link";
-
-function createData(name, calories, fat, carbs, protein) {
-  return { name, calories, fat, carbs, protein };
-}
-
-const rows = [
-  createData("Frozen yoghurt", 159, 6.0, 24, 4.0),
-  createData("Ice cream sandwich", 237, 9.0, 37, 4.3),
-  createData("Eclair", 262, 16.0, 24, 6.0),
-  createData("Cupcake", 305, 3.7, 67, 4.3),
-  createData("Gingerbread", 356, 16.0, 49, 3.9),
-];
+import { useState, useEffect } from "react";
+import { getList, request } from "./constant/constant";
+import axios from "axios";
+import { useRouter } from "next/router";
 
 export default function BasicTable() {
+  const [albumList, setAlbumList] = useState([]);
+  const [albumName, setAlbumName] = useState("");
+
+  const router = useRouter();
+
+  const getList = () => {
+    axios({
+      method: "get",
+      url: request.albumListUrl,
+      auth: request.auth,
+    })
+      .then((res) => {
+        setAlbumList(res.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(getList, []);
+
+  const addAlbum = () => {
+    axios({
+      method: "post",
+      data: { name: albumName },
+      url: request.albumListUrl,
+      auth: request.auth,
+    })
+      .then((res) => {
+        albumList(...albumList, res);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <section>
       <h2>albums</h2>
+      <Grid container direction="row" spacing={2}>
+        <Grid item>
+          <TextField
+            type="text"
+            label="add new album"
+            placeholder="album name"
+            variant="outlined"
+            required
+            onChange={(e) => setAlbumName(e.target.value)}
+          />
+          <Grid item>
+            <Button onClick={addAlbum} variant="contained">
+              Add
+            </Button>
+          </Grid>
+        </Grid>
+      </Grid>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="album list">
           <TableHead>
@@ -35,13 +84,13 @@ export default function BasicTable() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row) => (
+            {albumList.map((item) => (
               <TableRow
-                key={row.name}
+                key={item.name}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
               >
                 <TableCell component="th" scope="row">
-                  {row.name}
+                  {item.name}
                 </TableCell>
                 <TableCell component="th" scope="row">
                   <Stack direction="row" spacing={2}>
@@ -49,9 +98,23 @@ export default function BasicTable() {
                     <Button variant="outlined" color="error">
                       Delete
                     </Button>
-                      <Button href="/picture" variant="contained" color="info">
-                        SHow Details
-                      </Button>
+                    <Button
+                      variant="contained"
+                      color="info"
+                      onClick={() =>
+                        router.push(
+                          {
+                            pathname: "./picture",
+                            query: {
+                              id: item.id,
+                            },
+                          },
+                          { scroll: false }
+                        )
+                      }
+                    >
+                      SHow Details
+                    </Button>
                   </Stack>
                 </TableCell>
               </TableRow>

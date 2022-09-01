@@ -11,12 +11,14 @@ import {
 import React, { useState } from "react";
 import axios from "axios";
 import {
-    useTranslation,
-    useLanguageQuery,
-    LanguageSwitcher,
-  } from "next-export-i18n";
+  useTranslation,
+  useLanguageQuery,
+  LanguageSwitcher,
+} from "next-export-i18n";
+import { useRouter } from "next/router";
 
 const Login = () => {
+  const router = useRouter();
   const { t } = useTranslation();
   const [query] = useLanguageQuery();
   const [values, setValues] = useState({
@@ -36,6 +38,7 @@ const Login = () => {
       })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        router.push("/album");
       })
       .catch((err) => console.error(err));
   };

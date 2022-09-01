@@ -5,7 +5,6 @@ export default function handler(req, res) {
   // Optional logging to see the responses
   // in the command line where next.js app is running.
   console.log("body: ", body);
-  debugger;
   // Guard clause checks for first and last name,
   // and returns early if they are not found
   //   if (!body.userName || !body.email) {

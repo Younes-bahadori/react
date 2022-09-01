@@ -9,8 +9,6 @@ import {
   LanguageSwitcher,
 } from "next-export-i18n";
 
-
-
 export default function Home() {
   const router = useRouter();
   const { t } = useTranslation();
@@ -21,25 +19,7 @@ export default function Home() {
         <title></title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a> integrated with{" "}
-          <a href="https://mui.com/">Material-UI!</a>
-        </h1>
-        <p className={styles.description}>
-          {t("title")} <code className={styles.code}>pages/index.js</code>
-        </p>
-        <div>
-          <Link href="/" locale={router.locale === "en" ? "fa" : "en"}>
-            <button>
-              {t("change-locale", {
-                changeTo: router.locale === "en" ? "fa" : "en",
-              })}
-            </button>
-          </Link>
-        </div>
-      </main>
+      <main className={styles.main}></main>
     </div>
   );
 }
